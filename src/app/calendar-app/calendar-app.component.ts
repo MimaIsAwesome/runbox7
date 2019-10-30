@@ -73,6 +73,8 @@ import { EventTitleFormatter } from './event-title-formatter';
 })
 export class CalendarAppComponent implements OnDestroy {
     view: CalendarView = CalendarView.Month;
+    viewIsOverview = false;
+
     CalendarView = CalendarView;
     viewDate: Date = new Date();
     viewPeriod: ViewPeriod;
@@ -319,6 +321,11 @@ export class CalendarAppComponent implements OnDestroy {
                 this.importEvents(result, ics);
             }
         });
+    }
+
+    setView(view: CalendarView): void {
+        this.view = view;
+        this.viewIsOverview = view === null;
     }
 
     showAddCalendarDialog(): void {

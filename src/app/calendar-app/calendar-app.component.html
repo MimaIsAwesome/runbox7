@@ -103,24 +103,35 @@
                 Next
             </button>
 
-            <span class="calendarTitle" *ngIf="view">
-                {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+            <span class="calendarTitle">
+                <span *ngIf="view; else overview">
+                    {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+                </span>
+                <ng-template #overview>
+                    Overview
+                </ng-template>
             </span>
 
             <button mat-raised-button
-                (click)="view = CalendarView.Month"
+                (click)="setView(null)"
+                [color]="viewIsOverview ? 'primary' : ''"
+            >
+                Overview
+            </button>
+            <button mat-raised-button
+                (click)="setView(CalendarView.Month)"
                 [color]="view === CalendarView.Month ? 'primary' : ''"
             >
                 Month
             </button>
             <button mat-raised-button
-                (click)="view = CalendarView.Week"
+                (click)="setView(CalendarView.Week)"
                 [color]="view === CalendarView.Week ? 'primary' : ''"
             >
                 Week
             </button>
             <button mat-raised-button
-                (click)="view = CalendarView.Day"
+                (click)="setView(view = CalendarView.Day)"
                 [color]="view === CalendarView.Day ? 'primary' : ''"
             >
                 Day
@@ -155,6 +166,13 @@
         </ng-template>
 
         <div [ngSwitch]="view">
+          <app-calendar-overview
+            *ngSwitchDefault
+            [events]="shown_events"
+            [refresh]="refresh"
+            (editEvent)="openEvent($event)"
+          >
+          </app-calendar-overview>
           <mwl-calendar-month-view
             *ngSwitchCase="CalendarView.Month"
             [cellTemplate]="dayViewTemplate"
