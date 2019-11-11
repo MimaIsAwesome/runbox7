@@ -32,6 +32,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
             <button mat-mini-fab routerLink="/">
                 <mat-icon>email</mat-icon>
             </button>
+            <button mat-mini-fab routerLink="/contacts">
+                <mat-icon>people</mat-icon>
+            </button>
             <button mat-mini-fab routerLink="/calendar">
                 <mat-icon>date_range</mat-icon>
             </button>
